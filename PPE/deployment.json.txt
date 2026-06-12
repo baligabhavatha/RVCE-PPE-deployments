@@ -1,0 +1,113 @@
+```json
+{
+  "modulesContent": {
+    "$edgeAgent": {
+      "properties.desired": {
+        "schemaVersion": "1.1",
+        "runtime": {
+          "type": "docker",
+          "settings": {
+            "minDockerVersion": "v1.25",
+            "loggingOptions": "",
+            "registryCredentials": {
+              "myacr": {
+                "username": "bhavathacvacr",
+                "password": "2FUHnfKPWUI0pCYej4GXBsEX2JITJrnxZCFk4cRvuHK3Dso92jAEJQQJ99CFAC3pKaREqg7NAAACAZCR8PTt",
+                "address": "bhavathacvacr.azurecr.io"
+              }
+            }
+          }
+        },
+
+        "systemModules": {
+          "edgeAgent": {
+            "type": "docker",
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-agent:1.5",
+              "createOptions": ""
+            }
+          },
+
+          "edgeHub": {
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-hub:1.5",
+              "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
+            }
+          }
+        },
+
+        "modules": {
+
+          "frontend": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+
+            "env": {
+              "BACKEND_URL": {
+                "value": "http://backend:8009"
+              }
+            },
+
+            "settings": {
+              "image": "bhavathacvacr.azurecr.io/cv-frontend:v1.0.0",
+
+              "createOptions": "{\"HostConfig\":{\"Binds\":[\"/tmp:/tmp\"],\"PortBindings\":{\"8501/tcp\":[{\"HostPort\":\"8501\"}]}}}"
+            }
+          },
+
+          "backend": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+
+            "env": {
+              "MODEL_PATH": {
+                "value": "models/ppe.onnx"
+              },
+
+              "MODEL_MODE": {
+                "value": "PPE"
+              },
+
+              "CONF_THRESHOLD": {
+                "value": "0.5"
+              },
+
+              "IMG_SIZE": {
+                "value": "384"
+              }
+            },
+
+            "settings": {
+              "image": "bhavathacvacr.azurecr.io/cv-backend:v1.0.0",
+
+              "createOptions": "{\"HostConfig\":{\"Binds\":[\"/tmp:/tmp\"],\"PortBindings\":{\"8009/tcp\":[{\"HostPort\":\"8009\"}]}}}"
+            }
+          }
+
+        }
+      }
+    },
+
+    "$edgeHub": {
+      "properties.desired": {
+        "schemaVersion": "1.1",
+
+        "routes": {
+          "upstream": "FROM /messages/* INTO $upstream"
+        },
+
+        "storeAndForwardConfiguration": {
+          "timeToLiveSecs": 7200
+        }
+      }
+    }
+  }
+}
+```
