@@ -12,7 +12,7 @@
             "registryCredentials": {
               "myacr": {
                 "username": "bhavathacvacr",
-                "password": "2FUHnfKPWUI0pCYej4GXBsEX2JITJrnxZCFk4cRvuHK3Dso92jAEJQQJ99CFAC3pKaREqg7NAAACAZCR8PTt",
+                "password": "QJ99CFAC3pKaREqg7NAAACAZCR8PTt",
                 "address": "bhavathacvacr.azurecr.io"
               }
             }
