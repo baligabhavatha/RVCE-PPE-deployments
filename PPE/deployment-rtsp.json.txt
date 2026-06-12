@@ -80,7 +80,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "bluenviron/mediamtx:latest",
+              "image": "bhavathacvacr.azurecr.io/rvce-rtsp:v1.0.1",
               "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"8554/tcp\":[{\"HostPort\":\"8554\"}]}}}"
             }
           }
