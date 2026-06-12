@@ -3,26 +3,21 @@
     "$edgeAgent": {
       "properties.desired": {
         "schemaVersion": "1.1",
-
         "runtime": {
           "type": "docker",
-
           "settings": {
             "minDockerVersion": "v1.25",
             "loggingOptions": "",
-
             "registryCredentials": {
               "myacr": {
                 "username": "bhavathacvacr",
-                "password": "QJ99CFAC3pKaREqg7NAAACAZCR8PTt",
+                "password": "2FUHnfKPWUI0pCYej4GXBsEX2JITJrnxZCFk4cRvuHK3Dso92jAEJQQJ99CFAC3pKaREqg7NAAACAZCR8PTt",
                 "address": "bhavathacvacr.azurecr.io"
               }
             }
           }
         },
-
         "systemModules": {
-
           "edgeAgent": {
             "type": "docker",
             "settings": {
@@ -30,118 +25,56 @@
               "createOptions": ""
             }
           },
-
           "edgeHub": {
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
-
             "settings": {
               "image": "mcr.microsoft.com/azureiotedge-hub:1.5",
-
               "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
             }
           }
         },
-
         "modules": {
-
           "frontend": {
             "version": "1.0",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
-
             "env": {
               "BACKEND_URL": {
                 "value": "http://backend:8009"
               }
             },
-
             "settings": {
-              "image": "bhavathacvacr.azurecr.io/cv-frontend:v1.0.0",
-
+              "image": "bhavathacvacr.azurecr.io/cv-frontend:v2.0.0",
               "createOptions": "{\"HostConfig\":{\"Binds\":[\"/tmp:/tmp\"],\"PortBindings\":{\"8501/tcp\":[{\"HostPort\":\"8501\"}]}}}"
             }
           },
-
           "backend": {
             "version": "1.0",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
-
             "env": {
-
-              "MODEL_PATH": {
-                "value": "models/ppe.onnx"
-              },
-
-              "MODEL_MODE": {
-                "value": "DEFAULT"
-              },
-
-              "CONF_THRESHOLD": {
-                "value": "0.5"
-              },
-
-              "IMG_SIZE": {
-                "value": "384"
-              },
-
-              "ROI_TL_X": {
-                "value": "465"
-              },
-
-              "ROI_TL_Y": {
-                "value": "334"
-              },
-
-              "ROI_BR_X": {
-                "value": "1390"
-              },
-
-              "ROI_BR_Y": {
-                "value": "1075"
-              },
-
-              "NG_TL_X": {
-                "value": "670"
-              },
-
-              "NG_TL_Y": {
-                "value": "14"
-              },
-
-              "NG_BR_X": {
-                "value": "1385"
-              },
-
-              "NG_BR_Y": {
-                "value": "310"
+              "PYTHONUNBUFFERED": {
+                "value": "1"
               }
-
             },
-
             "settings": {
-              "image": "bhavathacvacr.azurecr.io/cv-backend:v1.0.0",
-
+              "image": "bhavathacvacr.azurecr.io/cv-backend:v1.0.1",
               "createOptions": "{\"HostConfig\":{\"Binds\":[\"/tmp:/tmp\"],\"PortBindings\":{\"8009/tcp\":[{\"HostPort\":\"8009\"}]}}}"
             }
           }
-
         }
       }
     },
-
     "$edgeHub": {
       "properties.desired": {
         "schemaVersion": "1.1",
-
         "routes": {
           "upstream": "FROM /messages/* INTO $upstream"
         },
-
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
         }
