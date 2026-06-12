@@ -1,4 +1,3 @@
-# RVCE-PPE-deployments
 # RVCE PPE Deployments
 
 Azure IoT Edge deployment repository for Raspberry Pi based PPE Detection, RTSP Streaming, and GO/NO-GO Zone Monitoring.
